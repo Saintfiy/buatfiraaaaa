@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+<title>Simple & Sweet for You 💖</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Pacifico&display=swap');
+
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body, html {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff0f6;
+    font-family: 'Comfortaa', cursive;
+    user-select: none;
+  }
+  #container {
+    width: 350px;
+    height: 600px;
+    background: linear-gradient(135deg, #ffd6e8, #ffa6c1);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(255, 100, 140, 0.4);
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 2.5rem;
+    color: #c60055;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    animation: fadeInDown 1.5s ease forwards;
+    opacity: 0;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: #82003c;
+    margin-bottom: 40px;
+    animation: fadeInUp 1.5s ease 0.8s forwards;
+    opacity: 0;
+    line-height: 1.4;
+  }
+
+  @keyframes fadeInDown {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  /* Simple Floating hearts */
+  .heart {
+    position: absolute;
+    bottom: 20px;
+    width: 18px;
+    height: 18px;
+    background: #e6004c;
+    transform: rotate(-45deg);
+    opacity: 0.8;
+    border-radius: 15px 15px 0 0;
+    animation: floatUp 5s linear infinite;
+  }
+  .heart:before,
+  .heart:after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #e6004c;
+    border-radius: 50%;
+  }
+  .heart:before {
+    top: 0;
+    left: 9px;
+  }
+  .heart:after {
+    top: 9px;
+    left: 0;
+  }
+  @keyframes floatUp {
+    0% {
+      transform: translateY(0) rotate(-45deg);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-500px) rotate(-45deg);
+      opacity: 0;
+    }
+  }
+
+  /* Hearts rotated left 90deg for button click hearts */
+  .heart.rotated {
+    transform: rotate(-90deg);
+    animation-name: floatUpRotated;
+  }
+  @keyframes floatUpRotated {
+    0% {
+      transform: translateY(0) rotate(-90deg);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-500px) rotate(-90deg);
+      opacity: 0;
+    }
+  }
+
+  #buttonHeart {
+    background: #d8004a;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 40px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+    box-shadow: 0 4px 15px rgba(216, 0, 78, 0.6);
+  }
+  #buttonHeart:hover {
+    background-color: #b2003e;
+  }
+
+  /* Pulsing heart effect when button clicked */
+  #buttonHeart.pulse {
+    animation: pulseHeart 1.2s ease;
+  }
+  @keyframes pulseHeart {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1);}
+  }
+
+</style>
+</head>
+<body>
+  <div id="container" role="main" aria-label="Simple and sweet romantic page">
+    <h1>FOR MY GIRLFRIEND<3</h1>
+    <p>Tunggu yaaa, aku masih nugas.<br>WOP UUU.</p>
+
+    <button id="buttonHeart" aria-label="pencet baby">pencet baby</button>
+  </div>
+
+<script>
+  const container = document.getElementById('container');
+  const buttonHeart = document.getElementById('buttonHeart');
+
+  // Create a floating heart animation from bottom at random horizontal position
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = Math.random() * 320 + 'px';
+    heart.style.animationDuration = (4 + Math.random() * 2) + 's';
+    container.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 5000);
+  }
+
+  // Generate a heart every 1.2s
+  setInterval(createHeart, 1200);
+
+  buttonHeart.addEventListener('click', () => {
+    buttonHeart.classList.add('pulse');
+    setTimeout(() => {
+      buttonHeart.classList.remove('pulse');
+    }, 1200);
+
+    // Create multiple hearts quickly from button position rotated left -90deg
+    for(let i = 0; i < 8; i++) {
+      setTimeout(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart', 'rotated'); // add rotated class for -90deg rotation
+        // Position hearts near button center:
+        const rect = buttonHeart.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const x = rect.left - containerRect.left + rect.width/2 + (Math.random()-0.5)*80;
+        heart.style.left = x + 'px';
+        heart.style.bottom = '80px';
+        heart.style.animationDuration = (3 + Math.random()*2) + 's';
+        container.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }, i * 100);
+    }
+  });
+</script>
+</body>
+</html>
+</content>
+</create_file>
