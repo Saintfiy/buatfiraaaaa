@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-<title>Biar ga ngambek aja si hehe</title>
+<title>Simple & Sweet for You 💖</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Pacifico&display=swap');
 
@@ -72,54 +72,20 @@
     }
   }
 
-  /* Simple Floating hearts */
-  .heart {
+  /* Heart emoji floating */
+  .heartEmoji {
     position: absolute;
     bottom: 20px;
-    width: 18px;
-    height: 18px;
-    background: #e6004c;
-    transform: rotate(-45deg);
+    font-size: 20px;
     opacity: 0.8;
-    border-radius: 15px 15px 0 0;
-    animation: floatUp 5s linear infinite;
-  }
-  .heart:before,
-  .heart:after {
-    content: "";
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    background: #e6004c;
-    border-radius: 50%;
-  }
-  .heart:before {
-    top: 0;
-    left: 9px;
-  }
-  .heart:after {
-    top: 9px;
-    left: 0;
-  }
-  @keyframes floatUp {
-    0% {
-      transform: translateY(0) rotate(-45deg);
-      opacity: 0.8;
-    }
-    100% {
-      transform: translateY(-500px) rotate(-45deg);
-      opacity: 0;
-    }
+    animation: floatUpEmoji 5s linear forwards;
+    user-select: none;
+    pointer-events: none;
   }
 
-  /* Hearts rotated left 90deg for button click hearts */
-  .heart.rotated {
-    transform: rotate(-90deg);
-    animation-name: floatUpRotated;
-  }
-  @keyframes floatUpRotated {
+  @keyframes floatUpEmoji {
     0% {
-      transform: translateY(0) rotate(-90deg);
+      transform: translateY(0) rotate(0deg);
       opacity: 0.8;
     }
     100% {
@@ -159,21 +125,26 @@
 </head>
 <body>
   <div id="container" role="main" aria-label="Simple and sweet romantic page">
-    <h1>FOR MY GIRLFRIEND<3</h1>
-    <p>Tunggu yaaa, aku masih nugas.<br>WOP UUU.</p>
+    <h1>FOR MY GIRLFRIEND</h1></h1>
+    <p>Tunggu yaa pacarmu masih nugas.<br>WOP UUU.</p>
 
-    <button id="buttonHeart" aria-label="pencet baby">pencet baby</button>
+    <button id="buttonHeart" aria-label="Show some love">Pencet ay</button>
+
+    <audio id="popSound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/28/audio_0fe5f6b536.mp3?filename=balloon-pop-5249.mp3"></audio>
   </div>
 
 <script>
   const container = document.getElementById('container');
   const buttonHeart = document.getElementById('buttonHeart');
+  const popSound = document.getElementById('popSound');
 
-  // Create a floating heart animation from bottom at random horizontal position
-  function createHeart() {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
+  // Create a floating heart emoji from bottom at random horizontal position
+  function createHeartEmoji() {
+    const heart = document.createElement('span');
+    heart.classList.add('heartEmoji');
+    heart.textContent = '❤️';
     heart.style.left = Math.random() * 320 + 'px';
+    heart.style.fontSize = (16 + Math.random() * 12) + 'px';
     heart.style.animationDuration = (4 + Math.random() * 2) + 's';
     container.appendChild(heart);
 
@@ -182,8 +153,8 @@
     }, 5000);
   }
 
-  // Generate a heart every 1.2s
-  setInterval(createHeart, 1200);
+  // Generate a heart emoji every 1.2s
+  setInterval(createHeartEmoji, 1200);
 
   buttonHeart.addEventListener('click', () => {
     buttonHeart.classList.add('pulse');
@@ -191,18 +162,27 @@
       buttonHeart.classList.remove('pulse');
     }, 1200);
 
+    // Play soft popping sound on click
+    // Reset currentTime to allow repeated quick clicks
+    popSound.currentTime = 0;
+    popSound.volume = 0.2;
+    popSound.play();
+
     // Create multiple hearts quickly from button position rotated left -90deg
     for(let i = 0; i < 8; i++) {
       setTimeout(() => {
-        const heart = document.createElement('div');
-        heart.classList.add('heart', 'rotated'); // add rotated class for -90deg rotation
+        const heart = document.createElement('span');
+        heart.classList.add('heartEmoji');
+        heart.textContent = '❤️';
         // Position hearts near button center:
         const rect = buttonHeart.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
         const x = rect.left - containerRect.left + rect.width/2 + (Math.random()-0.5)*80;
         heart.style.left = x + 'px';
         heart.style.bottom = '80px';
+        heart.style.fontSize = (18 + Math.random() * 10) + 'px';
         heart.style.animationDuration = (3 + Math.random()*2) + 's';
+        heart.style.animationName = 'floatUpEmoji';
         container.appendChild(heart);
 
         setTimeout(() => {
@@ -214,5 +194,3 @@
 </script>
 </body>
 </html>
-</content>
-</create_file>
